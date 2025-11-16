@@ -1,0 +1,8 @@
+id,date,amount,email,country
+1,2021-01-01,100,a@example.com,US
+2,2021-13-01,200,b@@example.com,us
+2,2021-02-30,,c@example, U.S.
+3,not_a_date,300,d@example.com,United States
+,2021-03-01,400,,IN
+6,2021-04-01,500,f@example.com,in
+7,2021-05-01,not_a_number,g@example,India
