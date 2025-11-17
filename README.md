@@ -36,8 +36,9 @@ The pipeline is built in Python and can handle **any CSV dataset**, making it id
 ```
 data-quality-agent-capstone/
 │
-├── app.py
+├── app.py                     ← Cloud Run API 
 ├── README.md
+├── .env                       ← Gemini API key 
 │
 ├── agents/
 │   ├── ingestion_agent.py
@@ -45,6 +46,11 @@ data-quality-agent-capstone/
 │   ├── autofix_agent.py
 │   ├── validation_agent.py
 │   ├── reporting_agent.py
+│
+├── tools/
+│   ├── helpers.py
+│   ├── gemini_helper.py       
+│   └── __init__.py
 │
 ├── data/
 │   ├── input/
@@ -57,8 +63,10 @@ data-quality-agent-capstone/
 ├── tests/
 │   └── test_agents.py
 │
-└── tools/
-    └── helpers.py
+├── main_pipeline.py           
+├── requirements.txt           
+└── Dockerfile                 
+
 ```
 
 ---
