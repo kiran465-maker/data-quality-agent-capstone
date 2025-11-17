@@ -1,14 +1,26 @@
-class QualityCheckAgent:
-    def __init__(self):
-        pass
+from tools.gemini_helper import ask_gemini
 
-    def run(self, df):
-        if df is None:
-            raise ValueError("[QualityCheckAgent] ERROR — No DataFrame received. Pipeline stopped.")
+def detect_quality_issues(df):
+    """
+    Runs quality checks and asks Gemini to analyze issues.
+    """
+    summary = {
+        "missing_values": df.isnull().sum().to_dict(),
+        "dtypes": df.dtypes.astype(str).to_dict(),
+        "duplicates": int(df.duplicated().sum())
+    }
 
-        print("[QualityCheckAgent] Running basic checks...")
-        print(df.info())
-        print(df.describe())
+    prompt = f"""
+    You are a data quality expert.
+    Analyze the following dataset summary:
+    {summary}
+    
+    Identify all issues and explain solutions in simple language.
+    """
 
-        # MUST RETURN df
-        return df
+    gemini_insights = ask_gemini(prompt)
+
+    return {
+        "summary": summary,
+        "gemini_feedback": gemini_insights
+    }

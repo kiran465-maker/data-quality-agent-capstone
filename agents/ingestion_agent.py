@@ -1,18 +1,13 @@
 import pandas as pd
-import os
 
-class IngestionAgent:
-
-    def __init__(self, input_path="data/input/raw.csv"):
-        self.input_path = input_path
-
-    def run(self):
-        if not os.path.exists(self.input_path):
-            raise FileNotFoundError(
-                f"[ERROR] Input file not found: {self.input_path}\n"
-                "Place a CSV file inside data/input/raw.csv"
-            )
-
-        df = pd.read_csv(self.input_path)
-        print(f"[IngestionAgent] Loaded file from: {self.input_path}")
-        return df
+def ingest_data(source_path=None, json_data=None):
+    """
+    Ingests data either from CSV file or directly from JSON input.
+    """
+    if json_data:
+        return pd.DataFrame(json_data)
+    
+    if source_path:
+        return pd.read_csv(source_path)
+    
+    raise ValueError("Provide either JSON data or a CSV path.")

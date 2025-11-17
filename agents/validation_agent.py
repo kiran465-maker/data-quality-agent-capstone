@@ -1,21 +1,14 @@
-import json
-import os
+def validate_data(df):
+    """
+    Very basic validation example. Expand as needed.
+    """
+    issues = []
 
-class ValidationAgent:
+    if df.empty:
+        issues.append("Dataset is empty.")
 
-    def __init__(self, output_path="data/output/validation_report.json"):
-        self.output_path = output_path
+    for col in df.columns:
+        if df[col].isnull().sum() > 0:
+            issues.append(f"Column '{col}' has missing values.")
 
-    def run(self, df):
-        report = {
-            "rows": len(df),
-            "columns": list(df.columns),
-            "missing_values": df.isnull().sum().to_dict()
-        }
-
-        os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
-        with open(self.output_path, "w") as f:
-            json.dump(report, f, indent=4)
-
-        print(f"[ValidationAgent] Report saved to: {self.output_path}")
-        return report
+    return {"validation_issues": issues}

@@ -1,18 +1,14 @@
-import pandas as pd
-import os
+def autofix(df):
+    """
+    Example auto-fix: fill missing values + fix string formatting.
+    """
+    df = df.copy()
 
-class AutoFixAgent:
+    # Fill missing text with "MISSING"
+    df = df.fillna("MISSING")
 
-    def __init__(self, output_path="data/output/cleaned.csv"):
-        self.output_path = output_path
+    # Trim extra spaces
+    for col in df.select_dtypes(include=['object']).columns:
+        df[col] = df[col].str.strip()
 
-    def run(self, df):
-        # Example fix
-        df = df.fillna("UNKNOWN")
-
-        # SAVE CLEANED FILE
-        os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
-        df.to_csv(self.output_path, index=False)
-
-        print(f"[AutoFixAgent] Cleaned file saved to: {self.output_path}")
-        return df
+    return df
