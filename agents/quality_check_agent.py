@@ -1,4 +1,14 @@
-from tools.data_profiler import profile_data
 class QualityCheckAgent:
+    def __init__(self):
+        pass
+
     def run(self, df):
-        return profile_data(df)
+        if df is None:
+            raise ValueError("[QualityCheckAgent] ERROR — No DataFrame received. Pipeline stopped.")
+
+        print("[QualityCheckAgent] Running basic checks...")
+        print(df.info())
+        print(df.describe())
+
+        # MUST RETURN df
+        return df

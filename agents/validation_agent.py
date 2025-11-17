@@ -1,7 +1,21 @@
-from tools.data_profiler import profile_data
-def compare_profiles(before, after):
-    b = profile_data(before); a = profile_data(after)
-    return {'before': b, 'after': a}
+import json
+import os
+
 class ValidationAgent:
-    def validate(self, before_df, after_df):
-        return compare_profiles(before_df, after_df)
+
+    def __init__(self, output_path="data/output/validation_report.json"):
+        self.output_path = output_path
+
+    def run(self, df):
+        report = {
+            "rows": len(df),
+            "columns": list(df.columns),
+            "missing_values": df.isnull().sum().to_dict()
+        }
+
+        os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
+        with open(self.output_path, "w") as f:
+            json.dump(report, f, indent=4)
+
+        print(f"[ValidationAgent] Report saved to: {self.output_path}")
+        return report

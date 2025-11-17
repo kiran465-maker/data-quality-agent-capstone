@@ -1,0 +1,19 @@
+{
+    "rows": 1000,
+    "columns": [
+        "ID",
+        "Age",
+        "Salary",
+        "Experience",
+        "Department",
+        "City"
+    ],
+    "missing_values": {
+        "ID": 0,
+        "Age": 0,
+        "Salary": 0,
+        "Experience": 0,
+        "Department": 0,
+        "City": 0
+    }
+}
